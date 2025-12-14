@@ -26,6 +26,14 @@ let time = 0;     // simulation time (s)
 const dt = 0.1;   // time step (s)
 let iSum = 0;     // integral term
 let ePrev = 0;    // previous error
+let energy = 0;   // total energy used (J)
+
+// --- Metrics variables ---
+let riseTime = null;
+let overshoot = 0;
+let settlingTime = null;
+let setpointReached = false;
+let lastSetpoint = Number(document.getElementById('setpoint').value);
 
 // --- Control function ---
 function control(setpoint, mode, kp, ki, kd, e) {
@@ -60,6 +68,20 @@ function step() {
   const ki = Number(document.getElementById('ki').value);
   const kd = Number(document.getElementById('kd').value);
 
+  // --- Reset metrics if setpoint changes ---
+  if (setpoint !== lastSetpoint) {
+    riseTime = null;
+    overshoot = 0;
+    settlingTime = null;
+    setpointReached = false;
+    energy = 0;
+    chart.data.labels = [];
+    chart.data.datasets[0].data = [];
+    lastSetpoint = setpoint;
+    time = 0;
+    T = 25; // reset temperature to ambient
+  }
+
   const e = setpoint - T;
   const u = control(setpoint, mode, kp, ki, kd, e);
 
@@ -68,6 +90,23 @@ function step() {
   const dTdt = (u - convLoss) / 500;   // 500 J/K thermal capacitance
   T += dTdt * dt;
   time += dt;
+
+  // --- Energy usage ---
+  energy += u * dt; // Joules (W * s)
+
+  // --- Metrics calculations ---
+  if (!setpointReached && T >= setpoint) {
+    riseTime = time.toFixed(1);
+    setpointReached = true;
+  }
+
+  if (T > setpoint) {
+    overshoot = Math.max(overshoot, ((T - setpoint) / setpoint * 100).toFixed(1));
+  }
+
+  if (Math.abs(T - setpoint) < 0.02 * setpoint && settlingTime === null && setpointReached) {
+    settlingTime = time.toFixed(1);
+  }
 
   // --- Update chart ---
   chart.data.labels.push(time.toFixed(1));
@@ -79,6 +118,12 @@ function step() {
   }
 
   chart.update();
+
+  // --- Update metrics display ---
+  document.getElementById('rise').textContent = riseTime || "—";
+  document.getElementById('overshoot').textContent = overshoot + " %";
+  document.getElementById('settling').textContent = settlingTime || "—";
+  document.getElementById('energy').textContent = energy.toFixed(1) + " J";
 }
 
 // --- Run simulation ---
