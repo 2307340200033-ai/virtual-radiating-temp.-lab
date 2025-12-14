@@ -1,2 +1,3 @@
-# virtual-radiating-temp.-lab
-This is a project on virtual lab
+# Virtual Radiating Surface Temperature Lab
+
+A simple web-based simulation where users adjust a setpoint and watch temperature response.
