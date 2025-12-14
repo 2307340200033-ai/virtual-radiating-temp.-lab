@@ -1,12 +1,65 @@
+/* General page styling */
 body {
   font-family: Arial, sans-serif;
   background: #f4f4f4;
+  margin: 0;
   padding: 20px;
-}
-h1 {
   color: #333;
 }
+
+h1 {
+  text-align: center;
+  color: #222;
+  margin-bottom: 20px;
+}
+
+/* Control panel styling */
+div {
+  margin: 10px 0;
+}
+
+label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+input[type="range"] {
+  width: 300px;
+  margin: 0 10px;
+}
+
+input[type="number"] {
+  width: 80px;
+  padding: 4px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+select {
+  padding: 4px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Chart styling */
 canvas {
-  max-width: 600px;
-  margin-top: 20px;
+  display: block;
+  max-width: 700px;
+  margin: 20px auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  input[type="range"] {
+    width: 200px;
+  }
+  canvas {
+    max-width: 100%;
+  }
 }
