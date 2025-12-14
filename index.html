@@ -4,13 +4,46 @@
   <meta charset="UTF-8">
   <title>Virtual Radiating Surface Temperature Lab</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <h1>Radiating Surface Temperature Control</h1>
-  <label>Setpoint (°C): <input id="setpoint" type="range" min="20" max="200" value="80"></label>
-  <span id="setpointVal">80 °C</span>
+  <h1>Radiating Surface Temperature Control Lab</h1>
+
+  <!-- Setpoint slider -->
+  <div>
+    <label for="setpoint">Setpoint (°C):</label>
+    <input id="setpoint" type="range" min="20" max="200" value="80" step="1">
+    <span id="setpointVal">80 °C</span>
+  </div>
+
+  <!-- Controller selector -->
+  <div>
+    <label for="controller">Controller:</label>
+    <select id="controller">
+      <option value="OFF">Off</option>
+      <option value="ONOFF">On/Off</option>
+      <option value="P">Proportional</option>
+      <option value="PID" selected>PID</option>
+    </select>
+  </div>
+
+  <!-- PID gain inputs -->
+  <div>
+    <label for="kp">Kp:</label>
+    <input id="kp" type="number" value="5" step="0.1">
+
+    <label for="ki">Ki:</label>
+    <input id="ki" type="number" value="0.2" step="0.01">
+
+    <label for="kd">Kd:</label>
+    <input id="kd" type="number" value="0.1" step="0.01">
+  </div>
+
+  <!-- Chart canvas -->
   <canvas id="tempChart"></canvas>
+
+  <!-- Link to JS -->
   <script src="app.js"></script>
 </body>
 </html>
