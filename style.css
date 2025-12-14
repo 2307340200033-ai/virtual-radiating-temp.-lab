@@ -54,12 +54,32 @@ canvas {
   padding: 10px;
 }
 
+/* Metrics styling */
+#metrics {
+  max-width: 700px;
+  margin: 20px auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 15px;
+}
+
+#metrics h2 {
+  margin-top: 0;
+  color: #444;
+}
+
+#metrics p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
 /* Responsive tweaks */
 @media (max-width: 768px) {
   input[type="range"] {
     width: 200px;
   }
-  canvas {
+  canvas, #metrics {
     max-width: 100%;
   }
 }
